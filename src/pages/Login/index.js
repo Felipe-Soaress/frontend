@@ -1,6 +1,4 @@
-import React, {
-    Component
-} from 'react';
+import React, {Component} from 'react';
 import api from '../../services/api';
 import sha256 from 'crypto-js/sha256';
 
@@ -39,7 +37,7 @@ export default class Login extends Component {
             newUser: response.data
         });
         console.log(response);
-        this.props.history.push(`/login/${response.data._id}`);
+        this.props.history.push(`/user/${response.data._id}`);
     };
 
     handleInputChange = (e) => {

@@ -16,7 +16,7 @@ export default class Main extends Component {
       title: this.state.newBox
     });
     console.log(response);
-    this.props.history.push(`/box/${response.data._id}`);
+    this.props.history.push(`/files/${response.data._id}`);
   };
 
   handleInputChange = (e) => {
