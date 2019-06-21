@@ -17,24 +17,21 @@ export default class Login extends Component {
 
     handleSubmit = async e => {
         e.preventDefault();
+        const data = {
+            username : document.getElementById("username").value,
+            password : CryptoJS.SHA256(document.getElementById("password").value).toString(CryptoJS.enc.Base64)
+        }
 
-        var username = document.getElementById("username");
-        var password = document.getElementById("password");
+        const response = await api.get(`login/?username=${data.username}&password=${data.password}`);
 
-        var hashName = CryptoJS.SHA256(username.value);
-        var hashPassword = CryptoJS.SHA256(password.value);
-
-        var result = hashName.toString(CryptoJS.enc.Hex);
-        var result2 = hashPassword.toString(CryptoJS.enc.Hex);
-
-        // const newUser = this.props.match.params.id;
-
-        const response = await api.get(`login/`, (result));
-
+        console.log(response);
+        if(!response.data){
+            alert("Credenciais inválidas");
+            return;
+        }
         this.setState({
             newUser: response.data
         });
-        console.log(response);
         this.props.history.push(`/user/${response.data._id}`);
     };
 
@@ -72,7 +69,8 @@ export default class Login extends Component {
             }
             /> 
             <button type = "submit" > Login </button> 
-            </form > 
+            </form >
+            <a href="/signin">\Register</a> 
             </div>
         );
 

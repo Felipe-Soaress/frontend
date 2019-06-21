@@ -5,7 +5,6 @@ var crypto = require("crypto");
 
 
 
-
 var encryptRsaPublicKey = function(toEncrypt, publicKey){
     var buffer = Buffer.from(toEncrypt);
     var encrypted = crypto.publicEncrypt(publicKey, buffer);

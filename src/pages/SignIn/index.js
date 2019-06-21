@@ -42,24 +42,24 @@ export default class SignIn extends Component {
     handleSubmit = async e => {
         e.preventDefault();
 
-        var username = document.getElementById("username");
-        var password = document.getElementById("password");
-        var email = document.getElementById("email");
-
-        var hashPassword = CryptoJS.SHA256(email.value+password.value);
-        var resultPassword = hashPassword.toString(CryptoJS.enc.Hex);      
+        const res = await api.get('/handshake');
+        const data = [{
+            username: document.getElementById("username").value,
+            password: CryptoJS.SHA256(document.getElementById("password").value).toString(CryptoJS.enc.Base64),
+            email: document.getElementById("email").value
+        }];
+        const privateKey = CryptoJS.SHA256(data.username + data.password).toString(CryptoJS.enc.Base64);
+        data[0].privateKey = privateKey;
+        var keyClient = encryptRsaPublicKey(privateKey, chavePu);
+        const resp = await api.post('/handshake', {data: keyClient});
+        if(resp){
+            const dataCiphered = CryptoJS.AES.encrypt(JSON.stringify(data), privateKey);
+            const response = await api.post('users', {data: dataCiphered.toString()});
+            this.props.history.push(`/`);
+        }else{
+            console.log("errooooo");
+        }
         
-        var usernameCripted = encryptRsaPrivateKey(username.value, chavePr);
-        console.log("user: ",usernameCripted);
-
-
-        const response = await api.post('users', {
-            username: username.value,
-            password: password.value,
-            email: email.value,
-        });
-        console.log(response);
-        this.props.history.push(`/user/${response.data._id}`);
     };
 
     handleInputChange = (e) => {
