@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
 import Dropzone from 'react-dropzone';
+import {MdFolder} from 'react-icons/md'
 
 import './styles.css';
 import { async } from 'q';
@@ -21,14 +22,16 @@ export default class User extends Component {
         // this.setState({ box: response.data });
     }
 
+
   render() {
     return (
-    <div id="box-container">
+    <div id = "box-container">
         <header>
             <img src="" alt=""/>
             <h1>{this.state.user.username}</h1>
-            <div id="boxesAll">
-            </div>
+                <button>
+                <a href="/Box" style={{color:"#FFF"}}>+ New Box</a>
+                </button>
         </header>
 
 
@@ -36,7 +39,7 @@ export default class User extends Component {
             {this.state.boxes.data && this.state.boxes.data.map(file => (
                 <li key={file._id}>
                 <a className="fileInfo" href={`/files/${file._id}`} target="_blank">
-                    
+                    <MdFolder size={24} color="#A5Cfff"/>
                     <strong>{file.title}</strong>
                 </a>
 

@@ -1,28 +1,40 @@
-#main-container{
-    height: 100%;
+#box-container{
+    max-width: 900px;
+    margin: 50px auto 0;
+}
 
+#box-container header {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#main-container form{
-    width: 300px;
+#box-container header h1{
+    font-size: 21px;
+    padding-left: 15px;
+    margin-left: 15px;
+    border-left: 1px solid #ddd;
+}
+
+#box-container ul li {
     display: flex;
-    flex-direction: column;
-
+    justify-content: space-between;
+    align-items: center;
+}
+#box-container ul li + li {
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
 }
 
-#main-container form input{
-    height: 48px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size:16px;
-    padding: 0 20px;
-    margin-top: 30px;
+
+
+#box-container ul li span {
+    color: #999;
+    font-size: 13px;
 }
 
-#main-container form button{
+button{
     height: 48px;
     background: #7159c1;
     border-radius: 4px;
@@ -35,6 +47,6 @@
     cursor: pointer;
 }
 
-#main-container form button:hover{
+button:hover{
     opacity: 0.8;
 }
