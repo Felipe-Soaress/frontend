@@ -20,7 +20,6 @@ export default class Login extends Component {
             username : document.getElementById("username").value,
             password : CryptoJS.SHA256(document.getElementById("password").value).toString(CryptoJS.enc.Base64)
         }
-
         const response = await api.get(`login/?username=${data.username}&password=${data.password}`);
 
         console.log(response);

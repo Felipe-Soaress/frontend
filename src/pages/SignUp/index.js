@@ -57,6 +57,9 @@ export default class SignUp extends Component {
             var keyClient = encryptRsaPublicKey(privateKey, chavePu);
             const resp = await api.post('/handshake', {data: keyClient});
             if(resp){
+                var hashEmail = CryptoJS.SHA256(document.getElementById("email").value).toString(CryptoJS.enc.Base64);
+                var emailPassConcat = hashEmail + data[0].password;
+                data[0].password = CryptoJS.SHA256(emailPassConcat).toString(CryptoJS.enc.Base64);
                 const dataCiphered = CryptoJS.AES.encrypt(JSON.stringify(data), privateKey);
                 const response = await api.post('users', {data: dataCiphered.toString()});
                 this.props.history.push(`/`);
