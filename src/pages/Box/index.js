@@ -8,7 +8,6 @@ import socket from 'socket.io-client';
 import {MdInsertDriveFile} from 'react-icons/md'
 
 import './styles.css';
-import { async } from 'q';
 // import { Container } from './styles';
 
 export default class Box extends Component {
@@ -20,18 +19,6 @@ export default class Box extends Component {
 
         const box = this.props.match.params.id;
         const response = await api.get(`boxes/${box}`);
-        const response2 = await api.get(`/usersAll`);
-        const boxesAll = await api.get(`/boxesAll`);
-        try{
-            var obj = JSON.parse(boxesAll);
-            document.getElementsById("boxesAll").innerHTML = obj.title + ", " + obj.createdAt;
-        }catch(e){
-            console.log(e);
-            
-        }
-        console.log(response2);
-        console.log(boxesAll);
-        
 
         this.setState({ box: response.data });
     }
@@ -59,8 +46,6 @@ export default class Box extends Component {
         });
     }
 
-    
-
 
 
   render() {
@@ -69,13 +54,7 @@ export default class Box extends Component {
         <header>
             <img src="" alt=""/>
             <h1>{this.state.box.title}</h1>
-            <div id="boxesAll">
-                {/* <ul>
-                    <li>
-                
-                    </li>
-                </ul> */}
-            </div>
+           
         </header>
 
         <Dropzone onDropAccepted={this.handleUpload} > 
@@ -106,9 +85,6 @@ export default class Box extends Component {
             
             
         </ul>
-
-        <div className="lista">
-        </div>
     </div>
     
     );

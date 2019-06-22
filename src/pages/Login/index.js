@@ -37,8 +37,9 @@ export default class Login extends Component {
         this.setState({
             newUser: response.data
         });
-        // this.props.history.push(`/user/${response.data._id}`);
-        this.props.history.push(`/box`);
+        console.log("response ",response);
+        this.props.history.push(`/user/${response.data._id}`);
+        // this.props.history.push(`/box`);
     };
 
     handleInputChange = (e) => {

@@ -14,8 +14,8 @@ const Routes = () => (
             <Route path="/box" component={Main}/>
             <Route path="/files/:id" component={Box}/>
             <Route path="/signup" component={SignUp}/>
-            <Route path="/login/:id" component={Login}/>
-            <Route path="/user" component={User}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/user/:id" component={User}/>
         </Switch>
     </BrowserRouter>
 );
