@@ -21,8 +21,15 @@ export default class Login extends Component {
             password : CryptoJS.SHA256(document.getElementById("password").value).toString(CryptoJS.enc.Base64)
         }
         const response = await api.get(`login/?username=${data.username}&password=${data.password}`);
-
         console.log(response);
+        if(response.data.naoExiste){
+            alert("usuário não existe");
+            return;
+        }
+        if(response.data.Existe){
+            alert("Senha inválida");
+            return;
+        }
         if(!response.data){
             alert("Credenciais inválidas");
             return;
