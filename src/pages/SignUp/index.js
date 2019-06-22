@@ -52,7 +52,7 @@ export default class SignUp extends Component {
         }];
         const verifica = await api.get(`users/?username=${document.getElementById("username").value}`);
         if(verifica.data.login){
-                const privateKey = CryptoJS.SHA256(data.username + data.password).toString(CryptoJS.enc.Base64);
+                const privateKey = CryptoJS.SHA256(data[0].username + data[0].password).toString(CryptoJS.enc.Base64);
             data[0].privateKey = privateKey;
             var keyClient = encryptRsaPublicKey(privateKey, chavePu);
             const resp = await api.post('/handshake', {data: keyClient});
