@@ -6,3 +6,17 @@ a {
     text-align: center;
     text-decoration: aliceblue;
 }
+
+img {
+    width: 300px;
+}
+
+#logo {
+    font-size: 30px;
+    width: 100px;
+}
+
+#divLogo {
+    width: 300px;
+    text-align: center;
+}

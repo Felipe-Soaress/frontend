@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import api from '../../services/api';
-import sha256 from 'crypto-js/sha256';
-
+import logo from '../../assets/box.gif'
 import './styles.css';
 // import { Container } from './styles';
 
@@ -52,7 +51,10 @@ export default class Login extends Component {
         return ( 
         <div id = "main-container" >
             <form onSubmit = {this.handleSubmit}>
-                <img src = "" alt = "" / >
+                <div id = "divLogo">
+                    <img src = {logo} alt = "" / >
+                    <text id = "logo">SaveBox</text>
+                </div>
                 <input id = "username"
                     placeholder = "Usuário"
                     value = {this.state.newUser}

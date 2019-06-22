@@ -4,6 +4,8 @@ import React, {
 import api from '../../services/api';
 import {decryptRsaPrivateKey,decryptRsaPublicKey,encryptRsaPrivateKey,encryptRsaPublicKey} from '../../utils/criptografia';
 import './styles.css';
+import logo from '../../assets/box.gif'
+
 // import { Container } from './styles';
 const CryptoJS = require('crypto-js');
 
@@ -84,7 +86,10 @@ export default class SignUp extends Component {
     return (
         <div id="main-container">
             <form onSubmit={this.handleSubmit}>
-                <img src="" alt=""/>
+            <div id = "divLogo">
+                    <img src = {logo} alt = "" / >
+                    <text id = "logo">SaveBox</text>
+                </div>
                 <input id="username"
                     placeholder="Usuário" 
                     value={this.state.newUser}
