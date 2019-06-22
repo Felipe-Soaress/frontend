@@ -69,8 +69,9 @@ export default class Login extends Component {
             }
             /> 
             <button type = "submit" > Login </button> 
+            <a href="/signup">Register</a> 
             </form >
-            <a href="/signin">\Register</a> 
+            
             </div>
         );
 

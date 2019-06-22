@@ -30,7 +30,7 @@ GbNxoF5JXgZn13ziUq9eL1ACayLBOiywmogG/Icg78vOqmDvaURClMXjARsjHX4X
 9rWUTwhBguBzL12BMQIDAQAB
 -----END PUBLIC KEY-----`;
 
-export default class SignIn extends Component {
+export default class SignUp extends Component {
     state = {
         newUser: '',
         newPassword: '',
