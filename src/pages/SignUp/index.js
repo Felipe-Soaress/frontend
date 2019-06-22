@@ -50,17 +50,24 @@ export default class SignUp extends Component {
             password: CryptoJS.SHA256(document.getElementById("password").value).toString(CryptoJS.enc.Base64),
             email: document.getElementById("email").value
         }];
-        const privateKey = CryptoJS.SHA256(data.username + data.password).toString(CryptoJS.enc.Base64);
-        data[0].privateKey = privateKey;
-        var keyClient = encryptRsaPublicKey(privateKey, chavePu);
-        const resp = await api.post('/handshake', {data: keyClient});
-        if(resp){
-            const dataCiphered = CryptoJS.AES.encrypt(JSON.stringify(data), privateKey);
-            const response = await api.post('users', {data: dataCiphered.toString()});
-            this.props.history.push(`/`);
+        const verifica = await api.get(`users/?username=${document.getElementById("username").value}`);
+        if(verifica.data.login){
+                const privateKey = CryptoJS.SHA256(data.username + data.password).toString(CryptoJS.enc.Base64);
+            data[0].privateKey = privateKey;
+            var keyClient = encryptRsaPublicKey(privateKey, chavePu);
+            const resp = await api.post('/handshake', {data: keyClient});
+            if(resp){
+                const dataCiphered = CryptoJS.AES.encrypt(JSON.stringify(data), privateKey);
+                const response = await api.post('users', {data: dataCiphered.toString()});
+                this.props.history.push(`/`);
+            }else{
+                console.log("errooooo");
+            }
         }else{
-            console.log("errooooo");
+            alert("Username já existe");
+            return;
         }
+        
         
     };
 
@@ -85,11 +92,11 @@ export default class SignUp extends Component {
     render() {
     return (
         <div id="main-container">
-            <form onSubmit={this.handleSubmit}>
             <div id = "divLogo">
                     <img src = {logo} alt = "" / >
                     <text id = "logo">SaveBox</text>
                 </div>
+            <form onSubmit={this.handleSubmit}>
                 <input id="username"
                     placeholder="Usuário" 
                     value={this.state.newUser}

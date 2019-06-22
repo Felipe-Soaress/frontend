@@ -51,11 +51,11 @@ export default class Login extends Component {
     render() {
         return ( 
         <div id = "main-container" >
-            <form onSubmit = {this.handleSubmit}>
-                <div id = "divLogo">
+            <div id = "divLogo">
                     <img src = {logo} alt = "" / >
                     <text id = "logo">SaveBox</text>
-                </div>
+            </div>
+            <form onSubmit = {this.handleSubmit}>
                 <input id = "username"
                     placeholder = "Usuário"
                     value = {this.state.newUser}
