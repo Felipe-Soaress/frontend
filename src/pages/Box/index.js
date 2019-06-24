@@ -10,6 +10,15 @@ import {MdInsertDriveFile} from 'react-icons/md'
 import './styles.css';
 // import { Container } from './styles';
 
+const CryptoJS = require('crypto-js');
+
+const chavePu = `-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvslv8UjnU9T3RG6WwJOTJ0EdS
+AFxMIT6N/eJ704Mh0CkksAD2hdspEJ5Qq07b6DPQcpI5zK1DQqC50vZMnP/hTZlU
+GbNxoF5JXgZn13ziUq9eL1ACayLBOiywmogG/Icg78vOqmDvaURClMXjARsjHX4X
+9rWUTwhBguBzL12BMQIDAQAB
+-----END PUBLIC KEY-----`;
+
 export default class Box extends Component {
     state = { box: {} };
 
@@ -36,12 +45,13 @@ export default class Box extends Component {
     }
 
     handleUpload = files => {
-        files.forEach(file => {
+        files.forEach(async file => {
             const data = new FormData();
             const box = this.props.match.params.id;
 
             data.append('file',file);
-
+            const cryptoFile = CryptoJS.AES.encrypt(file.path, chavePu).toString();
+            const response = await api.get(`/boxes`, {data: cryptoFile});
             api.post(`boxes/${box}/files`, data);
         });
     }
@@ -54,10 +64,10 @@ export default class Box extends Component {
         <header>
             <img src="" alt=""/>
             <h1>{this.state.box.title}</h1>
-           
+
         </header>
 
-        <Dropzone onDropAccepted={this.handleUpload} > 
+        <Dropzone onDropAccepted={this.handleUpload} >
             {({ getRootProps, getInputProps}) => (
                 <div className="upload" {...getRootProps()}>
                 <input { ...getInputProps()}/>
@@ -82,11 +92,11 @@ export default class Box extends Component {
             </li>
             )) }
 
-            
-            
+
+
         </ul>
     </div>
-    
+
     );
   }
 }
