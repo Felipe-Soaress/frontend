@@ -16,7 +16,6 @@ export default class User extends Component {
         const response2 = await api.get(`/usersAll`);
         const boxesAll = await api.get(`/boxesAll`);
         this.setState({boxes: boxesAll});
-        console.log("state: ", this.state.boxes);
         
 
         // this.setState({ box: response.data });

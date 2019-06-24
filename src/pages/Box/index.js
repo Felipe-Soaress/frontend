@@ -12,12 +12,7 @@ import './styles.css';
 
 const CryptoJS = require('crypto-js');
 
-const chavePu = `-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvslv8UjnU9T3RG6WwJOTJ0EdS
-AFxMIT6N/eJ704Mh0CkksAD2hdspEJ5Qq07b6DPQcpI5zK1DQqC50vZMnP/hTZlU
-GbNxoF5JXgZn13ziUq9eL1ACayLBOiywmogG/Icg78vOqmDvaURClMXjARsjHX4X
-9rWUTwhBguBzL12BMQIDAQAB
------END PUBLIC KEY-----`;
+const privateKey = "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=";
 
 export default class Box extends Component {
     state = { box: {} };
@@ -48,10 +43,12 @@ export default class Box extends Component {
         files.forEach(async file => {
             const data = new FormData();
             const box = this.props.match.params.id;
+            const cryptoFile = CryptoJS.AES.encrypt(JSON.stringify({name: file.name, path: file.path, lastModified: file.lastModified, lastModifiedDate: file.lastModifiedDate, webkitRelativePath:file.webkitRelativePath, size: file.size, type: file.type}), privateKey).toString();
+            const dataa = JSON.parse(CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(cryptoFile,  privateKey)));
 
-            data.append('file',file);
-            const cryptoFile = CryptoJS.AES.encrypt(file.path, chavePu).toString();
-            const response = await api.get(`/boxes`, {data: cryptoFile});
+            data.append('file',cryptoFile);
+            // const cryptoFile = CryptoJS.AES.encrypt(file, privateKey).toString();
+            // const response = await api.get(`/boxes`, {data: cryptoFile});
             api.post(`boxes/${box}/files`, data);
         });
     }

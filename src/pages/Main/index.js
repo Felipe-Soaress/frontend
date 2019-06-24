@@ -11,11 +11,9 @@ export default class Main extends Component {
 
   handleSubmit = async e =>{
     e.preventDefault();
-    // console.log(this.state.newBox);
     const response = await api.post('boxes', {
       title: this.state.newBox
     });
-    console.log(response);
     this.props.history.push(`/files/${response.data._id}`);
   };
 
