@@ -5,16 +5,19 @@ import {MdFolder} from 'react-icons/md'
 
 import './styles.css';
 import { async } from 'q';
-
+var userId = '';
 export default class User extends Component {
-    state = { user: {} ,
-            boxes: {}};
+    state = {user: {}, 
+        boxes: {}};
 
     async componentDidMount() {
         const box = this.props.match.params.id;
+        console.log("user: ",box);
+        userId = box;
+        console.log("user: ",userId);
         const response = await api.get(`boxes/${box}`);
         const response2 = await api.get(`/usersAll`);
-        const boxesAll = await api.get(`/boxesAll`);
+        const boxesAll = await api.get(`/boxesAll/${userId}`);
         this.setState({boxes: boxesAll});
         
 
@@ -29,7 +32,7 @@ export default class User extends Component {
             <img src="" alt=""/>
             <h1>{this.state.user.username}</h1>
                 <button>
-                <a href="/Box" style={{color:"#FFF"}}>+ New Box</a>
+                <a href={`/box/${userId}`} style={{color:"#FFF"}}>+ New Box</a>
                 </button>
         </header>
 
