@@ -12,11 +12,7 @@ export default class User extends Component {
 
     async componentDidMount() {
         const box = this.props.match.params.id;
-        console.log("user: ",box);
         userId = box;
-        console.log("user: ",userId);
-        const response = await api.get(`boxes/${box}`);
-        const response2 = await api.get(`/usersAll`);
         const boxesAll = await api.get(`/boxesAll/${userId}`);
         this.setState({boxes: boxesAll});
         
@@ -44,12 +40,6 @@ export default class User extends Component {
                     <MdFolder size={24} color="#A5Cfff"/>
                     <strong>{file.title}</strong>
                 </a>
-
-                {/* <span>
-                há{" "}
-                {distanceInWords(file.createdAt, new Date(), {
-                    locale: pt
-                }) }</span> */}
             </li>
             )) }
 

@@ -57,7 +57,7 @@ export default class Login extends Component {
         return ( 
         <div id = "main-container" >
             <div id = "divLogo">
-                    <img src = {logo} alt = "" / >
+                    <img src = {logo} alt = "" />
                     <text id = "logo">SaveBox</text>
             </div>
             <form onSubmit = {this.handleSubmit}>

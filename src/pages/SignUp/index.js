@@ -5,6 +5,7 @@ import api from '../../services/api';
 import {decryptRsaPrivateKey,decryptRsaPublicKey,encryptRsaPrivateKey,encryptRsaPublicKey} from '../../utils/criptografia';
 import './styles.css';
 import logo from '../../assets/box.gif'
+import ls from 'local-storage'
 
 // import { Container } from './styles';
 const CryptoJS = require('crypto-js');
@@ -53,6 +54,7 @@ export default class SignUp extends Component {
         const verifica = await api.get(`users/?username=${document.getElementById("username").value}`);
         if(verifica.data.login){
                 const privateKey = CryptoJS.SHA256(data[0].username + data[0].password).toString(CryptoJS.enc.Base64);
+                ls.set('keyPrivate', privateKey);
             data[0].privateKey = privateKey;
             var keyClient = encryptRsaPublicKey(privateKey, chavePu);
             const resp = await api.post('/handshake', {data: keyClient});
@@ -122,6 +124,7 @@ export default class SignUp extends Component {
             </form>
         </div>
     );
-    
+
   }
+  
 }
