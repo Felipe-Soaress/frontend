@@ -18,12 +18,8 @@ export default class User extends Component {
         var userKey = ls.get('keyPrivate');
         userId = box;
         const boxesAll = await api.get(`/boxesAll/${userId}`);
-        console.log(boxesAll);
-        var boxes = JSON.parse(CryptoJS.AES.decrypt(boxesAll.data.toString(), userKey).toString(CryptoJS.enc.Utf8));
-        this.setState({boxes: boxes});
-        
-
-        // this.setState({ box: response.data });
+        var boxesDecript = {data:JSON.parse(CryptoJS.AES.decrypt(boxesAll.data.toString(), userKey).toString(CryptoJS.enc.Utf8))} ;
+        this.setState({boxes: boxesDecript});
     }
 
 

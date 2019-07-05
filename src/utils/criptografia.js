@@ -1,4 +1,3 @@
-const CryptoJS = require('crypto-js');
 var crypto = require("crypto");
 
 

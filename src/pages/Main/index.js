@@ -28,7 +28,8 @@ export default class Main extends Component {
       boxNew: boxNew.toString(), user:userId
     });
     console.log(response);
-    this.props.history.push(`/files/${response.data._id}`);
+    var id = JSON.parse(CryptoJS.AES.decrypt(response.data._id.toString(), userKey).toString(CryptoJS.enc.Utf8));
+    this.props.history.push(`/files/${id._id}`);
   };
 
   handleInputChange = (e) => {

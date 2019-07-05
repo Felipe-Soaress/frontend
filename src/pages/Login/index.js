@@ -40,7 +40,6 @@ export default class Login extends Component {
         });
         const privateKey = CryptoJS.SHA256(data.username + data.password).toString(CryptoJS.enc.Base64);
         ls.set('keyPrivate', privateKey);
-        console.log(privateKey);
         var id = JSON.parse(CryptoJS.AES.decrypt(response.data._id.toString(), privateKey).toString(CryptoJS.enc.Utf8));
         this.props.history.push(`/user/${id._id}`);
         // this.props.history.push(`/box`);
