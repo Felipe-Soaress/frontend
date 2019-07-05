@@ -10,29 +10,6 @@ import ls from 'local-storage'
 // import { Container } from './styles';
 const CryptoJS = require('crypto-js');
 
-
-const chavePr = `-----BEGIN RSA PRIVATE KEY-----
-MIICXQIBAAKBgQCvslv8UjnU9T3RG6WwJOTJ0EdSAFxMIT6N/eJ704Mh0CkksAD2
-hdspEJ5Qq07b6DPQcpI5zK1DQqC50vZMnP/hTZlUGbNxoF5JXgZn13ziUq9eL1AC
-ayLBOiywmogG/Icg78vOqmDvaURClMXjARsjHX4X9rWUTwhBguBzL12BMQIDAQAB
-AoGAVHE6uJikZu+/WCMbjP8OXtiVjpnRwl0v/XqKQc00dynevF1C+Tj4TlJIZKkQ
-66w8SvDlypXOqEb7jJQSAFxstgYPbwxtKYzcyX9yEbK3c/PvJbnBAQxZSvJU7AuG
-gt7rtvM/vPslGRYnYgn0Jia+/A8dbcgdd75/lcOdu3f9l2ECQQDirxCQR+m7gIHn
-0GezLFnIY5heegSkw0MAh2cWuqby0v0KZrZG85CFP8nuknVL1o7x9HADfVYzXv4Q
-cQOQO5ilAkEAxms8/LcNP/TkDWsg/KB0KVNypdoMbQhjZCdOz3LQuOEJnsLmqDvn
-okMd0lkTA5+/HW67ATBYBM/mQ3qLrhQUnQJBAIYGM6jam9r8U9IXafiJlFviZsgV
-JIG14PuDEvRhTyvqiymHKOYyQ5RE7sNbXHaGWOW9PC0UAc9FrrlR2GWClvECQEod
-hIphVfGt6AGbIpc62CkXopuQ91NC7t1aUXXrzUtBw/Yplz8AIWXa7CjGXPPdl+XG
-ltO62yXxAnHyNHqxxYECQQDHoSy3g7RmEkyBih3PTFChoo8djRn6b2HRPQuOAucK
-xfgxCerR3aTqfzw+BOmd2yvUm4OIJ1y50G1pLZQnXKWv
------END RSA PRIVATE KEY-----`;
-const chavePu = `-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvslv8UjnU9T3RG6WwJOTJ0EdS
-AFxMIT6N/eJ704Mh0CkksAD2hdspEJ5Qq07b6DPQcpI5zK1DQqC50vZMnP/hTZlU
-GbNxoF5JXgZn13ziUq9eL1ACayLBOiywmogG/Icg78vOqmDvaURClMXjARsjHX4X
-9rWUTwhBguBzL12BMQIDAQAB
------END PUBLIC KEY-----`;
-
 export default class SignUp extends Component {
     state = {
         newUser: '',
@@ -46,6 +23,7 @@ export default class SignUp extends Component {
         e.preventDefault();
 
         const res = await api.get('/handshake');
+        const key = res.data.publicKey;
         const data = [{
             username: document.getElementById("username").value,
             password: CryptoJS.SHA256(document.getElementById("password").value).toString(CryptoJS.enc.Base64),
@@ -56,7 +34,7 @@ export default class SignUp extends Component {
                 const privateKey = CryptoJS.SHA256(data[0].username + data[0].password).toString(CryptoJS.enc.Base64);
                 ls.set('keyPrivate', privateKey);
             data[0].privateKey = privateKey;
-            var keyClient = encryptRsaPublicKey(privateKey, chavePu);
+            var keyClient = encryptRsaPublicKey(privateKey, key);
             const resp = await api.post('/handshake', {data: keyClient});
             if(resp){
                 var hashEmail = CryptoJS.SHA256(document.getElementById("email").value).toString(CryptoJS.enc.Base64);

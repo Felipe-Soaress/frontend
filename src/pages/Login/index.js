@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import api from '../../services/api';
 import logo from '../../assets/box.gif'
 import './styles.css';
+import ls from 'local-storage'
+
 // import { Container } from './styles';
 
 const CryptoJS = require('crypto-js');
@@ -36,7 +38,11 @@ export default class Login extends Component {
         this.setState({
             newUser: response.data
         });
-        this.props.history.push(`/user/${response.data._id}`);
+        const privateKey = CryptoJS.SHA256(data.username + data.password).toString(CryptoJS.enc.Base64);
+        ls.set('keyPrivate', privateKey);
+        console.log(privateKey);
+        var id = JSON.parse(CryptoJS.AES.decrypt(response.data._id.toString(), privateKey).toString(CryptoJS.enc.Utf8));
+        this.props.history.push(`/user/${id._id}`);
         // this.props.history.push(`/box`);
     };
 

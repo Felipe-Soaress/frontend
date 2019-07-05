@@ -2,19 +2,25 @@ import React, { Component } from 'react';
 import api from '../../services/api';
 import Dropzone from 'react-dropzone';
 import {MdFolder} from 'react-icons/md'
+import ls from 'local-storage'
+
 
 import './styles.css';
 import { async } from 'q';
 var userId = '';
+const CryptoJS = require('crypto-js');
 export default class User extends Component {
     state = {user: {}, 
         boxes: {}};
 
     async componentDidMount() {
         const box = this.props.match.params.id;
+        var userKey = ls.get('keyPrivate');
         userId = box;
         const boxesAll = await api.get(`/boxesAll/${userId}`);
-        this.setState({boxes: boxesAll});
+        console.log(boxesAll);
+        var boxes = JSON.parse(CryptoJS.AES.decrypt(boxesAll.data.toString(), userKey).toString(CryptoJS.enc.Utf8));
+        this.setState({boxes: boxes});
         
 
         // this.setState({ box: response.data });
